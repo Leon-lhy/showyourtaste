@@ -1,11 +1,12 @@
 var express = require("express"),
     router = express.Router({mergeParams: true}),
     Shoe = require("../models/shoe"),
-    Comment = require("../models/comment");
+    Comment = require("../models/comment"),
+    middleware = require("../middleware");
 
 
 //NEW
-router.get("/new", function(req, res){
+router.get("/new", middleware.isLoggedIn, function(req, res){
     Shoe.findById(req.params.id, function(err, foundShoe){
         if(err){
             console.log(err);
@@ -15,7 +16,7 @@ router.get("/new", function(req, res){
     })
 });
 //UPDATE
-router.post("/", function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res){
     var newComment = req.body.comment;
     Shoe.findById(req.params.id, function(err, shoe){
         if(err){
@@ -23,10 +24,18 @@ router.post("/", function(req, res){
         }else{
             Comment.create(newComment, function(err, comment){
                 if(err){
+                    req.flash("error", "Something went wrong");
                     console.log(err);
                 }else{
-                    shoe.comments.push(comment)
+                    //add username and id to comment
+                    comment.author.id = req.user._id;
+                    comment.author.username = req.user.username;
+                    //save comment
+                    comment.save();
+                    shoe.comments.push(comment);
                     shoe.save();
+                    console.log(comment);
+                    req.flash("success", "Successfully added comment");
                     res.redirect('/shoes/' + shoe._id);
                 }
             })
@@ -35,7 +44,7 @@ router.post("/", function(req, res){
 });
 
 //EDIT
-router.get("/:comment_id/edit",function(req,res){
+router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req,res){
 
     Comment.findById(req.params.comment_id, function(err, foundComment){
         if(err){
@@ -47,7 +56,7 @@ router.get("/:comment_id/edit",function(req,res){
 })
 
 //UPDATE
-router.put("/:comment_id", function(req, res){
+router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
        if(err){
            console.log(err);
@@ -58,11 +67,12 @@ router.put("/:comment_id", function(req, res){
 })
 
 //DELETE
-router.delete("/:comment_id", function(req, res){
+router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, res){
     Comment.findByIdAndRemove(req.params.comment_id, function(err){
         if(err){
             console.log(err);
         }else{
+            req.flash("success", "Comment deleted");
             res.redirect("/shoes/" + req.params.id);
         }
     })

@@ -4,7 +4,7 @@
 
 | Name    | URL             | Verb   | Desc                            | db()                     |
 | ------- | --------------- | ------ | ------------------------------- | ------------------------ |
-| INDEX   | /shoes          | GET    | List all shoes                  | Shoe.find()              |
+| INDEX   | /shoes          | GET    | list all shoes                  | Shoe.find()              |
 | NEW     | /shoes/new      | GET    | show new shoe form              | N/A                      |
 | CREATE  | /shoes          | POST   | create a new shoe then redirect | Shoe.create()            |
 | SHOW    | /shoes/:id      | GET    | show info about one shoe        | Shoe.findById()          |
@@ -40,5 +40,7 @@
 
 1. restfull pages of shoes, comments and db()
 2. css
-3. refactor
-4. authentication
+3. refactor -- router
+4. authentication -- passport-local
+5. authorization -- session, middleware
+6. flash message

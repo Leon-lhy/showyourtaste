@@ -1,11 +1,12 @@
 var express = require("express");
 var router = express.Router();
 var Shoe = require("../models/shoe");
+var middleware = require("../middleware");
 
 
-
+//INDEX - show all sneakers
 router.get("/", function(req, res){
-    
+    //Get all sneakers from db
     Shoe.find({}, function(err, allshoes){
         if(err){
             console.log(err);
@@ -16,20 +17,32 @@ router.get("/", function(req, res){
     });
 });
 
-router.post("/", function(req, res){
-    var newShoe = req.body.shoe
+//CREATE - add new sneaker to DB
+router.post("/", middleware.isLoggedIn, function(req, res){
+    // get data from form and add
+    console.log("name :" + req.body.name);
+    var name = req.body.name;
+    var price = req.body.price;
+    var image = req.body.image;
+    var desc = req.body.description;
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    var newShoe = {name: name, price:price, image: image, description: desc, author:author}
     Shoe.create(newShoe, function(err, newlyCreated){
         if(err){
             console.log(err);
         }else{
+            console.log(newlyCreated);
             res.redirect("/shoes");
         }
     });
     
 })
 
-//create a new pair of shoe
-router.get("/new", function(req, res){
+//NEW - show form to create a new
+router.get("/new", middleware.isLoggedIn, function(req, res){
     res.render("shoes/new");
 })
 
@@ -45,19 +58,17 @@ router.get("/:id", function(req, res){
 });
 
 //edit
-router.get("/:id/edit", function(req, res){
+router.get("/:id/edit", middleware.checkShoeOwnership, function(req, res){
     Shoe.findById(req.params.id, function(err, foundShoe){
-        if(err){
-            console.log(err);
-        }else{
-            res.render("shoes/edit", {shoe:foundShoe});
-        }
+        
+        res.render("shoes/edit", {shoe:foundShoe});
+        
     })
     
 });
 
 //update
-router.put("/:id", function(req,res){
+router.put("/:id", middleware.checkShoeOwnership, function(req,res){
     Shoe.findByIdAndUpdate(req.params.id, req.body.shoe, function(err, updatedShoe){
         if(err){
             console.log(err);
@@ -68,7 +79,7 @@ router.put("/:id", function(req,res){
 });
 
 
-router.delete("/:id", function(req, res){
+router.delete("/:id", middleware.checkShoeOwnership, function(req, res){
     Shoe.findByIdAndRemove(req.params.id, function(err){
         if(err){
             console.log(err);
