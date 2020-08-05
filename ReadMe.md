@@ -2,9 +2,23 @@
 
 https://showtaste.herokuapp.com/
 
+
+
+## Function
+
+
+
+- Restful routes
+
+- CRUD sneakers
+
+- Authentication
+
+- Authorization
+
+  
+
 ## RESTful
-
-
 
 | Name    | URL             | Verb   | Desc                            | db()                     |
 | ------- | --------------- | ------ | ------------------------------- | ------------------------ |
@@ -27,45 +41,6 @@ https://showtaste.herokuapp.com/
 | DESTROY | /shoes/:id/comments/:comment_id      | DELETE | delete a comment then redirect     | Comment.findByIdAndRemove()       |
 
 
-
-
-
-## Database
-
-##### Shoe:
-
-- name
-
-- price
-
-- image
-
-- description
-
-- author {
-
-  ​	id -- User
-
-  ​	username
-
-  }
-
-**comment:**
-
-- text
-
-- author{
-
-  ​	id --User
-
-  ​	username
-
-  }
-
-**user**:
-
-- username
-- password
 
 ## STEP
 
