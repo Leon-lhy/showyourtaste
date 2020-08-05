@@ -14,15 +14,15 @@ var showRoutes = require("./routes/shoes");
 var commentRoutes = require("./routes/comments");
 var indexRoutes = require("./routes/index");
 
-// mongoose.connect("mongodb://localhost/shoe_db", {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// });
-
-mongoose.connect("mongodb+srv://Leon:Le980104@showtaste.dpm4h.mongodb.net/<dbname>?retryWrites=true&w=majority", {
+mongoose.connect("mongodb://localhost/shoe_db", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
+
+// mongoose.connect("mongodb+srv://Leon:Le980104@showtaste.dpm4h.mongodb.net/<dbname>?retryWrites=true&w=majority", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// });
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
