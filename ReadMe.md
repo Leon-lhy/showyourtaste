@@ -1,3 +1,9 @@
+## Link
+
+[showTaste]: https://showtaste.herokuapp.com/	"pick sneakers"
+
+
+
 ## RESTful
 
 
@@ -63,7 +69,7 @@
 - username
 - password
 
-## Step
+## STEP
 
 1. restfull pages of shoes, comments and db()
 2. css
