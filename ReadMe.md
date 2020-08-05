@@ -10,7 +10,7 @@ https://showtaste.herokuapp.com/
 
 - Restful routes
 
-- CRUD sneakers
+- CRUD sneakers/comments
 
 - Authentication
 
