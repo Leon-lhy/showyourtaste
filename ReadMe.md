@@ -1,8 +1,6 @@
 ## Link
 
-[showTaste]: https://showtaste.herokuapp.com/	"pick sneakers"
-
-
+https://showtaste.herokuapp.com/
 
 ## RESTful
 
