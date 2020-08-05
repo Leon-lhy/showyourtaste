@@ -54,6 +54,6 @@ app.use("/", indexRoutes);
 app.use("/shoes", showRoutes);
 app.use("/shoes/:id/comments", commentRoutes);
 
-app.listen(3000, function(){
+app.listen(process.env.PORT, process.env.IP, function(){
     console.log("ShowTaste has been started.....")
 })
