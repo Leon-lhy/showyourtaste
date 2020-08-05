@@ -31,10 +31,37 @@
 ##### Shoe:
 
 - name
+
+- price
+
 - image
+
 - description
 
+- author {
 
+  ​	id -- User
+
+  ​	username
+
+  }
+
+**comment:**
+
+- text
+
+- author{
+
+  ​	id --User
+
+  ​	username
+
+  }
+
+**user**:
+
+- username
+- password
 
 ## Step
 
@@ -44,3 +71,6 @@
 4. authentication -- passport-local
 5. authorization -- session, middleware
 6. flash message
+7. landing page css
+8. deploy heroku
+9. set environment variables
