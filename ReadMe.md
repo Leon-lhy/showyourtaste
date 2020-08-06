@@ -10,6 +10,8 @@ https://showtaste.herokuapp.com/
 
 - Restful routes
 
+- Search function
+
 - CRUD sneakers/comments
 
 - Authentication
