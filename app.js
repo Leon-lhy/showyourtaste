@@ -14,7 +14,7 @@ var showRoutes = require("./routes/shoes");
 var commentRoutes = require("./routes/comments");
 var indexRoutes = require("./routes/index");
 
-mongoose.connect("mongodb://localhost/shoe_db", {
+mongoose.connect("mongodb+srv://Leon:Le980104@showtaste.dpm4h.mongodb.net/<dbname>?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -48,7 +48,7 @@ app.use(function(req, res, next){
 app.use("/", indexRoutes);
 app.use("/shoes", showRoutes);
 app.use("/shoes/:id/comments", commentRoutes);
-
-app.listen(process.env.PORT, process.env.IP, function(){
+// process.env.PORT, process.env.IP,
+app.listen(3000, function(){
     console.log("ShowTaste has been started.....")
 })

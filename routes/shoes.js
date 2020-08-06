@@ -6,15 +6,29 @@ var middleware = require("../middleware");
 
 //INDEX - show all sneakers
 router.get("/", function(req, res){
-    //Get all sneakers from db
-    Shoe.find({}, function(err, allshoes){
-        if(err){
-            console.log(err);
-        }else{
-            res.render("shoes/index", {shoes:allshoes});
-        }
-        
-    });
+    if(req.query.search){
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        Shoe.find({name:regex}, function(err, allshoes){
+            if(err || !allshoes.length){
+                req.flash('error', 'No sneakers matched your search. Please try again.');
+                res.redirect("back");
+            }else{
+                res.render("shoes/index", {shoes:allshoes});
+            }
+            
+        });
+    }else{
+        //Get all sneakers from db
+        Shoe.find({}, function(err, allshoes){
+            if(err){
+                console.log(err);
+            }else{
+                res.render("shoes/index", {shoes:allshoes});
+            }
+            
+        });
+    }
+    
 });
 
 //CREATE - add new sneaker to DB
@@ -88,5 +102,9 @@ router.delete("/:id", middleware.checkShoeOwnership, function(req, res){
         }
     })
 })
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;

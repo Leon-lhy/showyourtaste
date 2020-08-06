@@ -24,7 +24,15 @@
     
     <div id="landing-header">
  		<h1>Welcome to ShowTaste!</h1>
-		<a href="/shoes" class="btn btn-lg btn-success">View All Sneakers</a>
+        <a href="/shoes" class="btn btn-lg btn-success">View All Sneakers</a>
+        <p>
+            <form action="/shoes" method="GET" class="form-inline">
+                <div class="form-group">
+                    <input type="text" name="search" placeholder="Sneakers Search..." class="form-control">
+                    <input type="submit" value="Search" class="btn btn-default">
+                </div>
+            </form>
+        </p>
     </div>
     
     <ul class="slideshow">
